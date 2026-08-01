@@ -1,0 +1,541 @@
+{
+  "name": "Fiverr Gig Health Analyzer",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Fiverr Gig Health Analyzer",
+        "formDescription": "Submit your full gig details to get a precise Health Score out of 100 with prioritized fixes. Competitors and niche trends are analyzed automatically.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Gig Title",
+              "fieldName": "Gig Title",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Gig Description",
+              "fieldType": "textarea",
+              "fieldName": "Gig Description",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Category",
+              "fieldName": "Category",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Subcategory / Tags",
+              "fieldName": "Subcategory Tags",
+              "placeholder": "e.g. logo design, minimalist, tech",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Language",
+              "fieldType": "dropdown",
+              "fieldName": "Language",
+              "fieldOptions": {
+                "values": [
+                  { "option": "English" },
+                  { "option": "Spanish" },
+                  { "option": "French" },
+                  { "option": "German" },
+                  { "option": "Portuguese" },
+                  { "option": "Italian" },
+                  { "option": "Dutch" },
+                  { "option": "Other" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Seller Level",
+              "fieldType": "dropdown",
+              "fieldName": "Seller Level",
+              "fieldOptions": {
+                "values": [
+                  { "option": "New Seller" },
+                  { "option": "Level 1" },
+                  { "option": "Level 2" },
+                  { "option": "Top Rated" },
+                  { "option": "PRO" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Price Tier",
+              "fieldType": "dropdown",
+              "fieldName": "Price Tier",
+              "fieldOptions": {
+                "values": [
+                  { "option": "Budget" },
+                  { "option": "Mid" },
+                  { "option": "Premium" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Pricing Packages",
+              "fieldType": "number",
+              "fieldName": "Number of Pricing Packages",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Package Prices",
+              "fieldName": "Package Prices",
+              "placeholder": "e.g. 25, 60, 120",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Delivery Time in Days",
+              "fieldType": "number",
+              "fieldName": "Delivery Time in Days",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of Revisions",
+              "fieldType": "dropdown",
+              "fieldName": "Number of Revisions",
+              "fieldOptions": {
+                "values": [
+                  { "option": "Unlimited" },
+                  { "option": "3" },
+                  { "option": "2" },
+                  { "option": "1" },
+                  { "option": "None" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Number of FAQ Items",
+              "fieldType": "number",
+              "fieldName": "Number of FAQ Items",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Has Gig Video",
+              "fieldType": "dropdown",
+              "fieldName": "Has Gig Video",
+              "fieldOptions": {
+                "values": [
+                  { "option": "Yes" },
+                  { "option": "No" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Requires Order Requirements",
+              "fieldType": "dropdown",
+              "fieldName": "Requires Order Requirements",
+              "fieldOptions": {
+                "values": [
+                  { "option": "Yes" },
+                  { "option": "No" }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Response Time in Hours",
+              "fieldType": "number",
+              "fieldName": "Response Time in Hours"
+            },
+            {
+              "fieldLabel": "Response Rate Percent",
+              "fieldType": "number",
+              "fieldName": "Response Rate Percent"
+            },
+            {
+              "fieldLabel": "Cancellation Rate Percent",
+              "fieldType": "number",
+              "fieldName": "Cancellation Rate Percent"
+            },
+            {
+              "fieldLabel": "On-Time Delivery Percent",
+              "fieldType": "number",
+              "fieldName": "On-Time Delivery Percent"
+            },
+            {
+              "fieldLabel": "Impressions Last 30 Days",
+              "fieldType": "number",
+              "fieldName": "Impressions Last 30 Days"
+            },
+            {
+              "fieldLabel": "Clicks Last 30 Days",
+              "fieldType": "number",
+              "fieldName": "Clicks Last 30 Days"
+            },
+            {
+              "fieldLabel": "Orders Last 30 Days",
+              "fieldType": "number",
+              "fieldName": "Orders Last 30 Days"
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "19f7fa70-a9af-48ef-817c-d3a7f2a3015b",
+      "name": "Gig Intake Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [0, 288],
+      "webhookId": "f1521099-93ba-4aac-bdc3-e97787a81396"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://google.serper.dev/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"q\": \"site:fiverr.com/gigs \" + $json[\"Category\"], \"gl\": \"us\", \"num\": 10 } }}",
+        "options": {}
+      },
+      "id": "0ea5c4da-154f-4a81-8e37-87d49f0c8572",
+      "name": "Get Competitor Gigs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [224, 0],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "KQ6stomTb0ePaS7P",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const organic = ($input.first().json.organic) || [];\nconst competitors = organic.slice(0, 8).map((r) => ({\n  title: r.title || \"\",\n  snippet: r.snippet || \"\",\n  link: r.link || \"\",\n}));\nreturn [{ json: { competitors } }];"
+      },
+      "id": "36ebe0d0-41b9-4c7d-aedd-9840373bb82c",
+      "name": "Format Competitor Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [448, 0]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {}
+      },
+      "id": "dfa21dce-f1ea-40f7-87b1-4420b5355bd7",
+      "name": "Combine Inputs",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [672, 256]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://google.serper.dev/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"q\": $json[\"Category\"] + \" freelance demand trend 2026\", \"gl\": \"us\", \"num\": 10, \"tbs\": \"qdr:m6\" } }}",
+        "options": {}
+      },
+      "id": "6b6f75f0-77ab-453d-a9bf-48466b4668d3",
+      "name": "Get Niche Momentum Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [448, 192],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "KQ6stomTb0ePaS7P",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const formData = $input.all()[0].json;\nreturn [{\n  json: {\n    ...formData,\n    benchmark: {\n      healthy_ctr_percent: 5,\n      healthy_conversion_percent: 10,\n      ideal_title_length_max: 80,\n      ideal_package_tiers: 3,\n      ideal_faq_items_min: 3,\n      ideal_delivery_days_max: 3,\n      ideal_revisions: \"Unlimited\",\n      healthy_response_hours_max: 1,\n      healthy_response_rate_min: 90,\n      healthy_cancellation_rate_max: 5,\n      healthy_ontime_delivery_min: 95,\n    },\n  },\n}];"
+      },
+      "id": "b77cab28-501f-413e-8179-31e21be4a3cf",
+      "name": "Benchmark Reference",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [448, 384]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze the following Fiverr gig and produce a Gig Health Score.\n\n=== USER GIG ===\nTitle: {{ $json[\"Gig Title\"] }}\nDescription: {{ $json[\"Gig Description\"] }}\nCategory: {{ $json[\"Category\"] }}\nSubcategory/Tags: {{ $json[\"Subcategory Tags\"] }}\nLanguage: {{ $json[\"Language\"] }}\nSeller Level: {{ $json[\"Seller Level\"] }}\nPrice Tier: {{ $json[\"Price Tier\"] }}\nNumber of Pricing Packages: {{ $json[\"Number of Pricing Packages\"] }}\nPackage Prices: {{ $json[\"Package Prices\"] }}\nDelivery Time in Days: {{ $json[\"Delivery Time in Days\"] }}\nNumber of Revisions: {{ $json[\"Number of Revisions\"] }}\nNumber of FAQ Items: {{ $json[\"Number of FAQ Items\"] }}\nHas Gig Video: {{ $json[\"Has Gig Video\"] }}\nRequires Order Requirements: {{ $json[\"Requires Order Requirements\"] }}\nResponse Time (hours): {{ $json[\"Response Time in Hours\"] }}\nResponse Rate (%): {{ $json[\"Response Rate Percent\"] }}\nCancellation Rate (%): {{ $json[\"Cancellation Rate Percent\"] }}\nOn-Time Delivery (%): {{ $json[\"On-Time Delivery Percent\"] }}\nImpressions (30d): {{ $json[\"Impressions Last 30 Days\"] }}\nClicks (30d): {{ $json[\"Clicks Last 30 Days\"] }}\nOrders (30d): {{ $json[\"Orders Last 30 Days\"] }}\n\n=== COMPETITOR GIGS (from Fiverr search — title + snippet pairs only) ===\n{{ JSON.stringify($json.competitors || []) }}\n\n=== NICHE MOMENTUM SEARCH RESULTS (last 6 months) ===\n{{ JSON.stringify($json.organic || []) }}\n\n=== BENCHMARK REFERENCE ===\n{{ JSON.stringify($json.benchmark || {}) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a rigorous Fiverr gig performance analyst. Calculate a Gig Health Score out of 100 using the STRICT weighted rubric below. Never invent data; only use the values provided in the prompt.\n\nIMPORTANT — COMPETITOR DATA SOURCE: Competitor information is NOT provided as full manual descriptions or pricing. It comes ONLY as a list of competitor gig search results, each with a \"title\" and a \"snippet\" (and a link) pulled from a live Fiverr search. Judge competitors solely on the patterns, keywords, and tone visible in those titles and snippets. Do not assume competitor prices or package structures — that data is not available.\n\nWEIGHTED RUBRIC (total 100 points):\n1. Niche Momentum (15 pts): Base this ONLY on the provided niche momentum search results. Recent results indicating growing/strong demand score higher; weak or absent momentum evidence scores lower. Always cite specific organic result snippets.\n2. Title & Metadata SEO (15 pts): Evaluate title keyword quality and specificity against competitor title patterns AND the benchmark ideal_title_length_max. Also evaluate: language match to the target market (English gigs in English-speaking categories score higher), subcategory/tag relevance and coverage of key service aspects.\n3. Description Quality (15 pts): Compare the user description against the TONE and KEYWORD FOCUS seen in the competitor snippets. Reward clarity, benefit framing, coverage of themes competitors emphasize, and clear deliverables/outline structure.\n4. Package & Delivery Structure (15 pts): Compare package count vs benchmark ideal_package_tiers (3), delivery time vs benchmark ideal_delivery_days_max (3 days), and revisions vs benchmark ideal_revisions (Unlimited). Calibrate price tier expectations. Faster delivery + generous revisions = higher score.\n5. Trust & Visual Signals (10 pts): Evaluate gig video presence (Yes/No), FAQ count vs benchmark ideal_faq_items_min (3), seller level (Top Rated/PRO > Level 2 > Level 1 > New Seller), and whether order requirements are enabled (Yes = better).\n6. Activity & Reliability Signals (15 pts): Based on response time vs benchmark healthy_response_hours_max (1 hour), response rate vs benchmark healthy_response_rate_min (90%), cancellation rate vs benchmark healthy_cancellation_rate_max (5%), and on-time delivery vs benchmark healthy_ontime_delivery_min (95%). Faster, higher, lower, higher = better respectively.\n7. Funnel Health (15 pts): Calculate from Impressions, Clicks, and Orders: CTR vs benchmark healthy_ctr_percent (5%); conversion rate vs benchmark healthy_conversion_percent (10%). If any metric is missing, award half points for that sub-category and flag it as estimated.\n\nCONFIDENCE RULES (strict enforcement):\n- Count the number of competitor search results actually returned. If fewer than 5 competitor results were returned, set confidence_label to \"LOW CONFIDENCE\".\n- If the niche momentum search returned fewer than 3 organic results with substantive snippets, set confidence_label to \"LOW CONFIDENCE\".\n- If the user left 3 or more optional fields empty, set confidence_label to \"LOW CONFIDENCE\".\n- In all other cases, set confidence_label to \"HIGH CONFIDENCE\".\n- When LOW CONFIDENCE, explicitly list in the justification of relevant categories which estimates or assumptions were made.\n\nREPORTING RULES:\n- total_score must equal the exact sum of all category scores, out of 100.\n- For EVERY category score, cite in the data_point field the specific competitor result, organic snippet, or benchmark value it is based on.\n- Provide a per-category breakdown with: category, score, max, justification, data_point, and one actionable top_fix each.\n- Provide a top 3 priority_actions list ranked by impact, each labeled with the funnel_stage (Impressions, Clicks, Orders/Conversion) it most improves.\n- Return ONLY the structured JSON required by the output schema."
+        }
+      },
+      "id": "5f9dba6d-f703-45c7-a8e4-4cecbcd9c146",
+      "name": "Gig Health Analyst",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [896, 288]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-6",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "id": "18822a69-e4b5-4daf-beb1-1bbae424e418",
+      "name": "Anthropic Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [912, 512],
+      "credentials": {
+        "anthropicApi": {
+          "id": null,
+          "name": "n8n Connect",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"total_score\": 78,\n  \"confidence_label\": \"HIGH CONFIDENCE\",\n  \"category_breakdown\": [\n    {\n      \"category\": \"Niche Momentum\",\n      \"score\": 12,\n      \"max\": 15,\n      \"justification\": \"Search results show steady demand in this category over the last 6 months with 5 substantive results.\",\n      \"data_point\": \"organic result #3: 'growing demand for X services in 2026'\",\n      \"top_fix\": \"Add the trending keyword from organic result #1 into your title.\"\n    },\n    {\n      \"category\": \"Title & Metadata SEO\",\n      \"score\": 10,\n      \"max\": 15,\n      \"justification\": \"Title is within ideal length but lacks the specific keywords used by top competitor gigs. Language matches the market. Tags cover main service but miss premium variants.\",\n      \"data_point\": \"benchmark ideal_title_length_max: 80; competitor #2 title uses 'professional X service'\",\n      \"top_fix\": \"Add 'professional' and the niche keyword from competitor #2 to your title.\"\n    },\n    {\n      \"category\": \"Description Quality\",\n      \"score\": 11,\n      \"max\": 15,\n      \"justification\": \"Description covers deliverables well but lacks the benefit framing seen in competitor snippets.\",\n      \"data_point\": \"competitor #5 snippet emphasizes '24h delivery' and 'unlimited revisions'\",\n      \"top_fix\": \"Rewrite the first paragraph to lead with a clear benefit statement.\"\n    },\n    {\n      \"category\": \"Package & Delivery Structure\",\n      \"score\": 13,\n      \"max\": 15,\n      \"justification\": \"3 packages is ideal. Delivery time of 2 days beats the 3-day benchmark. Unlimited revisions match the ideal.\",\n      \"data_point\": \"benchmark ideal_package_tiers: 3, ideal_delivery_days_max: 3, ideal_revisions: Unlimited\",\n      \"top_fix\": \"Consider adding an express delivery upgrade for the premium package.\"\n    },\n    {\n      \"category\": \"Trust & Visual Signals\",\n      \"score\": 7,\n      \"max\": 10,\n      \"justification\": \"Has gig video. FAQ count meets minimum. Seller level is Level 2 which is strong. Order requirements enabled.\",\n      \"data_point\": \"benchmark ideal_faq_items_min: 3; seller level: Level 2\",\n      \"top_fix\": \"Add 2 more FAQ items targeting common buyer objections.\"\n    },\n    {\n      \"category\": \"Activity & Reliability Signals\",\n      \"score\": 12,\n      \"max\": 15,\n      \"justification\": \"Response time of 2 hours is slightly above the 1-hour benchmark. Response rate of 98% exceeds the 90% benchmark. Cancellation rate and on-time delivery within healthy ranges.\",\n      \"data_point\": \"benchmark healthy_response_hours_max: 1, healthy_response_rate_min: 90\",\n      \"top_fix\": \"Reduce response time to under 1 hour by enabling instant notifications.\"\n    },\n    {\n      \"category\": \"Funnel Health\",\n      \"score\": 13,\n      \"max\": 15,\n      \"justification\": \"CTR of 6.2% exceeds the 5% benchmark. Conversion rate of 8.5% is slightly below the 10% benchmark but still strong.\",\n      \"data_point\": \"benchmark healthy_ctr_percent: 5, healthy_conversion_percent: 10\",\n      \"top_fix\": \"A/B test your gig thumbnail to improve conversion rate.\"\n    }\n  ],\n  \"priority_actions\": [\n    {\n      \"rank\": 1,\n      \"action\": \"Add trending keyword 'professional' from competitor #2 to your gig title to improve search visibility.\",\n      \"funnel_stage\": \"Impressions\"\n    },\n    {\n      \"rank\": 2,\n      \"action\": \"Reduce response time to under 1 hour by enabling push notifications.\",\n      \"funnel_stage\": \"Orders/Conversion\"\n    },\n    {\n      \"rank\": 3,\n      \"action\": \"A/B test your gig thumbnail to improve click-through rate.\",\n      \"funnel_stage\": \"Clicks\"\n    }\n  ]\n}"
+      },
+      "id": "c554a826-09dd-41cf-8826-08797ca065df",
+      "name": "Health Score Schema",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [1040, 512]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "total_score",
+              "value": "={{ $json.output.total_score }}",
+              "type": "number"
+            },
+            {
+              "id": "a2",
+              "name": "confidence_label",
+              "value": "={{ $json.output.confidence_label }}",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "category_breakdown",
+              "value": "={{ $json.output.category_breakdown }}",
+              "type": "array"
+            },
+            {
+              "id": "a4",
+              "name": "priority_actions",
+              "value": "={{ $json.output.priority_actions }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6d804849-1ffe-4f7d-b801-76cb382a5155",
+      "name": "Format Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1248, 288]
+    },
+    {
+      "parameters": {
+        "jsCode": "const d = $input.first().json;\n\nif (!d.category_breakdown || !d.total_score) {\n  return [{ json: { html: '<h2>Error: No analysis data received. Please try again.</h2>' } }];\n}\n\nconst scoreColor = d.total_score >= 70 ? '#10b981' : d.total_score >= 40 ? '#f59e0b' : '#ef4444';\nconst confColor = d.confidence_label === 'HIGH CONFIDENCE' ? '#10b981' : '#f59e0b';\nconst confBg = d.confidence_label === 'HIGH CONFIDENCE' ? '#ecfdf5' : '#fffbeb';\n\nconst categoryCards = d.category_breakdown.map(c => {\n  const ratio = c.score / c.max;\n  const catColor = ratio >= 0.7 ? '#10b981' : ratio >= 0.4 ? '#f59e0b' : '#ef4444';\n  const catBg = ratio >= 0.7 ? '#ecfdf5' : ratio >= 0.4 ? '#fffbeb' : '#fef2f2';\n  return `<div style=\"margin-bottom:12px;padding:14px 18px;background:${catBg};border-radius:10px;border-left:4px solid ${catColor}\">\n    <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:4px\">\n      <strong style=\"font-size:15px;color:#1f2937\">${c.category}</strong>\n      <span style=\"font-size:20px;font-weight:700;color:${catColor}\">${c.score}/${c.max}</span>\n    </div>\n    <p style=\"margin:4px 0;color:#4b5563;font-size:13px;line-height:1.4\">${c.justification || ''}</p>\n    <p style=\"margin:4px 0;font-size:13px;color:#1f2937\"><strong>Top Fix:</strong> ${c.top_fix || ''}</p>\n    ${c.data_point ? `<p style=\"margin:4px 0;font-size:12px;color:#6b7280\"><em>Based on:</em> ${c.data_point}</p>` : ''}\n  </div>`;\n}).join('\\n');\n\nconst priorityItems = d.priority_actions.map(a => {\n  const stageColors = { 'Impressions': '#dbeafe;#2563eb', 'Clicks': '#fef3c7;#d97706', 'Orders/Conversion': '#ecfdf5;#059669' };\n  const [bg, tx] = (stageColors[a.funnel_stage] || '#f3f4f6;#374151').split(';');\n  return `<li style=\"margin-bottom:10px;padding:12px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;display:flex;align-items:center;justify-content:space-between\">\n    <span style=\"font-size:14px;color:#1f2937;flex:1\"><strong>${a.rank}.</strong> ${a.action}</span>\n    <span style=\"margin-left:12px;padding:3px 12px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap;background:${bg};color:${tx}\">${a.funnel_stage}</span>\n  </li>`;\n}).join('\\n');\n\nconst html = `<!DOCTYPE html>\n<html>\n<head><meta charset=\"utf-8\"><style>\n  body { font-family: system-ui, -apple-system, sans-serif; background:#f0f2f5; margin:0; padding:24px; }\n  .card { max-width:680px; margin:0 auto; background:#fff; border-radius:16px; padding:32px; box-shadow:0 4px 24px rgba(0,0,0,0.08); }\n  h1 { margin:0 0 2px; font-size:22px; color:#111; font-weight:700; }\n  .score-row { display:flex; align-items:center; gap:14px; margin:12px 0 4px; }\n  .score-num { font-size:44px; font-weight:800; color:${scoreColor}; line-height:1; }\n  .conf-badge { display:inline-block; padding:4px 14px; border-radius:99px; font-size:12px; font-weight:600; background:${confBg}; color:${confColor}; }\n  .sub { font-size:13px; color:#6b7280; margin-bottom:20px; }\n  h2 { font-size:16px; color:#374151; margin:20px 0 10px; padding-bottom:6px; border-bottom:2px solid #e5e7eb; }\n  ol { padding:0; list-style:none; }\n  hr { border:none; border-top:1px solid #e5e7eb; margin:20px 0 0; }\n</style></head>\n<body>\n<div class=\"card\">\n  <h1>Gig Health Score</h1>\n  <div class=\"score-row\">\n    <div class=\"score-num\">${d.total_score}/100</div>\n    <div class=\"conf-badge\">${d.confidence_label}</div>\n  </div>\n  <div class=\"sub\">Detailed breakdown of each scoring category below.</div>\n  <h2>Category Breakdown</h2>\n  ${categoryCards}\n  <h2>Priority Actions</h2>\n  <ol>${priorityItems}</ol>\n  <hr>\n  <p style=\"font-size:11px;color:#9ca3af;text-align:center;margin:12px 0 0\">Generated by Fiverr Gig Health Analyzer</p>\n</div>\n</body></html>`;\n\nreturn [{ json: { html } }];"
+      },
+      "id": "addf9b2e-c1a6-4b4c-8474-2a3646689a29",
+      "name": "Build HTML Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1472, 192]
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "={{ $json.html }}"
+      },
+      "id": "2082d390-2807-4e17-b73e-e1b3d691760c",
+      "name": "Respond With Results",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [1728, 288],
+      "webhookId": "7a41b3e8-7a21-4ef7-8bd0-36f8a5bfb47d"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gig Intake Form": {
+      "main": [
+        [
+          {
+            "node": "Get Competitor Gigs",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Niche Momentum Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Benchmark Reference",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Competitor Gigs": {
+      "main": [
+        [
+          {
+            "node": "Format Competitor Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Competitor Data": {
+      "main": [
+        [
+          {
+            "node": "Combine Inputs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Niche Momentum Data": {
+      "main": [
+        [
+          {
+            "node": "Combine Inputs",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Benchmark Reference": {
+      "main": [
+        [
+          {
+            "node": "Combine Inputs",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Combine Inputs": {
+      "main": [
+        [
+          {
+            "node": "Gig Health Analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gig Health Analyst": {
+      "main": [
+        [
+          {
+            "node": "Format Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gig Health Analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Health Score Schema": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Gig Health Analyst",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Output": {
+      "main": [
+        [
+          {
+            "node": "Build HTML Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build HTML Report": {
+      "main": [
+        [
+          {
+            "node": "Respond With Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d6528956-7364-408a-b346-f21bb1b4b824",
+  "meta": {
+    "instanceId": "2630531287fcd1f6746667ca6647b2f298e9b318e84e900aa37dadaf6f4f8e39"
+  },
+  "nodeGroups": [],
+  "id": "MYvl1cGSfTlQ4snq",
+  "tags": []
+}

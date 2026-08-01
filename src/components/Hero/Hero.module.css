@@ -1,0 +1,448 @@
+/* ─── Hero Section ──────────────────────────────────────────────────────────
+   Two-column split: LEFT = text identity, RIGHT = transparent (3D cubes show through)
+   ──────────────────────────────────────────────────────────────────────────*/
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none; /* Let mouse events pass through to HelixGallery */
+}
+
+/* Project-colour atmosphere: the left mask keeps all identity text readable. */
+.projectAtmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    /* 1) Top-Left Glow (Sits over the dark mask for a rich ambient light from the top corner) */
+    radial-gradient(circle 65vw at 0% 0%, color-mix(in srgb, var(--project-color) 45%, transparent) 0%, transparent 85%),
+    /* 2) Bottom-Right Glow (Massive and vibrant blast from the bottom corner) */
+    radial-gradient(circle 85vw at 100% 100%, color-mix(in srgb, var(--project-color) 75%, transparent) 0%, transparent 85%),
+    /* 3) Dark base mask on the left (ensures text always has a high-contrast foundation) */
+    linear-gradient(90deg, color-mix(in srgb, var(--project-color) 10%, #050505) 0%, rgba(5, 5, 5, 0.9) 25%, rgba(0, 0, 0, 0.4) 50%, transparent 85%);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projectAtmosphereVisible {
+  opacity: 1;
+}
+
+/* ── Nav actions row (below stats) ───────────────────────── */
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.navLink {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--white-dim);
+  text-decoration: none;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 3px;
+  transition: color 0.25s ease;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: linear-gradient(90deg, #00e1ff, #7b5ea7);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navLink:hover { color: var(--white); }
+.navLink:hover::after { width: 100%; }
+
+/* ── Contact button ───────────────────────────────────────── */
+.contactBtn {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 14px;
+  border: none;
+  padding: 2px;
+  background: radial-gradient(circle 70px at 80% -10%, #3a3d3d, #0d0f0f);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contactBtn::after {
+  content: "";
+  position: absolute;
+  width: 65%;
+  height: 60%;
+  border-radius: 120px;
+  top: 0;
+  right: 0;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.12);
+  z-index: -1;
+}
+
+.contactBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 225, 255, 0.15);
+}
+
+.contactBlob {
+  position: absolute;
+  width: 60px;
+  height: 100%;
+  border-radius: 14px;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(circle 50px at 0% 100%, #00e1ff, rgba(0, 80, 255, 0.5), transparent);
+  box-shadow: -8px 8px 24px rgba(0, 81, 255, 0.2);
+  pointer-events: none;
+}
+
+.contactInner {
+  display: block;
+  padding: 10px 22px;
+  border-radius: 12px;
+  color: #fff;
+  z-index: 3;
+  position: relative;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: radial-gradient(circle 70px at 80% -50%, #444747, #0c0e0e);
+  white-space: nowrap;
+}
+
+.contactInner::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 12px;
+  background: radial-gradient(circle 50px at 0% 100%, rgba(0, 225, 255, 0.10), rgba(0, 0, 255, 0.07), transparent);
+  position: absolute;
+  pointer-events: none;
+}
+
+/* ── Two-column split grid ────────────────────────────────── */
+.split {
+  flex: 1;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  align-items: center;
+  padding: 0 1.2rem;
+  gap: 0;
+}
+
+/* ── Left side — identity content ────────────────────────── */
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: clamp(380px, 40vw, 580px);
+  padding-left: 2.5rem;
+  height: 100%;
+  pointer-events: auto; /* Re-enable pointer events for text/buttons */
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: clamp(0.62rem, 0.8vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  color: var(--white-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+}
+
+/* Main title */
+.titleContainer {
+  position: relative;
+  margin-bottom: 1.4rem;
+  display: flex;
+}
+
+.titleBase, .titleChrome {
+  font-family: var(--font-hero);
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: flex;
+}
+
+.titleBase {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.titleChrome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* Let mouse events pass to base */
+  color: transparent;
+  
+  /* Pure Liquid Chrome — uses opacity-based whites so dark stops fade the letter instead of going grey */
+  background: linear-gradient(
+    110deg,
+    rgba(255,255,255,0.95) 0%,
+    rgba(255,255,255,0.05) 20%,
+    rgba(255,255,255,1.00) 40%,
+    rgba(255,255,255,0.03) 55%,
+    rgba(255,255,255,0.80) 70%,
+    rgba(255,255,255,1.00) 100%
+  );
+  background-size: 200% auto;
+  animation: chromeShine 4s linear infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  
+  /* Magic Spotlight Mask controlled by JS (Sharper, more concentrated) */
+  mask-image: radial-gradient(
+    circle 80px at calc(var(--mouse-x, -1000) * 1px) calc(var(--mouse-y, -1000) * 1px),
+    black 0%,
+    rgba(0,0,0,0.8) 40%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 80px at calc(var(--mouse-x, -1000) * 1px) calc(var(--mouse-y, -1000) * 1px),
+    black 0%,
+    rgba(0,0,0,0.8) 40%,
+    transparent 100%
+  );
+}
+
+@keyframes chromeShine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.charWrap {
+  display: inline-block;
+  overflow: visible;
+  line-height: 0.9;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
+}
+
+.char { display: inline-block; }
+
+/* Tagline */
+.tagline {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1.4vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+  max-width: clamp(320px, 34vw, 480px);
+}
+
+/* Bio */
+.bio {
+  font-family: var(--font-body);
+  font-size: clamp(0.78rem, 1.1vw, 1rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--white-dim);
+  margin-bottom: 1.5rem;
+  max-width: clamp(300px, 32vw, 460px);
+}
+
+/* Stats row */
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.statNum {
+  font-family: var(--font-hero);
+  font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+  line-height: 1;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+}
+
+.statLabel {
+  font-family: var(--font-body);
+  font-size: clamp(0.6rem, 0.8vw, 0.75rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  color: var(--white-dim);
+  text-transform: uppercase;
+}
+
+.statDivider {
+  width: 1px;
+  height: 2rem;
+  background: var(--white-faint);
+}
+
+
+
+/* ── Right side — transparent, the fixed 3D helix gallery shows through */
+.right {
+  height: 100%;
+  min-height: 400px;
+  pointer-events: none;
+}
+
+/* ── Bottom scroll line ───────────────────────────────────── */
+.bottom {
+  position: absolute;
+  bottom: 2rem;
+  right: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 3.5rem;
+  background: linear-gradient(to bottom, var(--white-dim), transparent);
+  animation: scrollPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 0.9; transform: scaleY(1.12); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+/*
+ * Medium range: 1001px – 1400px
+ * Everything scales proportionally so the layout stays balanced.
+ * Grid goes from 45/55 → 43/57 (left shrinks as helix canvas also shrinks).
+ * Left padding: 2.5rem → 1.5rem.  Max-width: 580px → 400px.
+ * All via clamp() for a smooth glide — no abrupt jumps.
+ */
+@media (max-width: 1400px) and (min-width: 1001px) {
+  .split {
+    grid-template-columns: clamp(43fr, calc(38fr + 0.5vw * 0.7), 45fr) clamp(55fr, calc(62fr - 0.5vw * 0.7), 57fr);
+    padding: 0 clamp(0.6rem, 1vw, 1.2rem);
+  }
+
+  .left {
+    /* max-width scales from 400px at 1000px to 580px at 1400px */
+    max-width: clamp(400px, calc(-100px + 34.5vw), 580px);
+    /* padding-left scales from 1.5rem at 1000px to 2.5rem at 1400px */
+    padding-left: clamp(1.5rem, calc(-1rem + 1.75vw), 2.5rem);
+  }
+
+  .tagline {
+    max-width: clamp(280px, 30vw, 480px);
+  }
+
+  .bio {
+    max-width: clamp(260px, 28vw, 460px);
+  }
+}
+
+@media (max-width: 1000px) {
+  .hero {
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+    padding: 0;
+    align-items: center;
+  }
+
+  .right {
+    display: none;
+  }
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 3rem 1.5rem;
+    max-width: 100%;
+    text-align: center;
+    z-index: 20;
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 35%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.65) 70%, transparent 100%);
+  }
+
+  .tagline {
+    font-size: clamp(0.88rem, 3.2vw, 1.05rem);
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .bio {
+    font-size: clamp(0.78rem, 2.8vw, 0.9rem);
+    max-width: 85%;
+    margin: 0 auto;
+  }
+
+  .titleBase,
+  .titleChrome {
+    font-size: clamp(2.6rem, 11vw, 4.5rem);
+    white-space: normal;
+    justify-content: center;
+  }
+
+  .eyebrow,
+  .stats,
+  .navActions {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .navActions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav { padding: 1.5rem; }
+  .navLinks { display: none; }
+  .bottom { display: none; }
+}

@@ -1,0 +1,15 @@
+.container {
+  position: relative;
+  display: inline-block;
+  perspective: 500px;
+}
+
+.letter {
+  display: inline-block;
+  white-space: pre;
+  transform-style: preserve-3d;
+  font-family: var(--font-bebas), 'Arial Black', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}

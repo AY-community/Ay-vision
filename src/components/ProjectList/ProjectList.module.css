@@ -1,0 +1,183 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 20;
+  padding-left: 8vw;
+}
+
+.scrollContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 550px;
+}
+
+.categoryBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.categoryLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.categoryLine {
+  flex-grow: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.projectGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Premium Focus Effect: Dim un-hovered siblings */
+.projectGroup:hover .projectItem:not(:hover) {
+  opacity: 0.35;
+}
+
+.projectItem {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projectName {
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: left center;
+}
+
+.projectDetails {
+  display: flex;
+  gap: 2rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projectTagline {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.hoverLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 1);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes retroPulse {
+  0% {
+    color: #fff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    color: rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 0px transparent;
+  }
+  100% {
+    color: #fff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.4);
+  }
+}
+
+.projectItem:hover .projectName {
+  transform: translateX(12px);
+  animation: retroPulse 1.5s ease-in-out infinite;
+}
+
+.projectItem:hover .projectDetails {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.projectItem:hover .hoverLine {
+  transform: scaleX(1);
+}
+
+.projectItemDisabled {
+  cursor: default;
+}
+
+.linkArrow {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  opacity: 0;
+  transform: translate(-10px, 10px);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.projectItem:hover .linkArrow {
+  opacity: 1;
+  transform: translate(0, 0);
+  color: #fff;
+}
+
+.statusBadge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+}
+@media (max-width: 1000px) {
+  .container {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 2rem 1.5rem;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .scrollContent {
+    height: 100%;
+    width: 100%;
+    gap: 0.75rem;
+    justify-content: space-between;
+    max-width: 720px;
+  }
+}
