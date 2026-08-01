@@ -87,8 +87,8 @@ export default function InteractiveTitle({ phase = 'done' }: { phase?: string })
           className={styles.titleChrome}
           aria-hidden="true"
           initial={{ opacity: 0 }}
-          animate={{ opacity: phase === 'outro' ? 0 : 1 }}
-          transition={{ duration: phase === 'outro' ? 0.3 : 0.6 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
           style={{
             '--mouse-x': smoothX,
             '--mouse-y': smoothY,
