@@ -1,44 +1,44 @@
 # Portfolio Project
 
-> A polished, motion-driven portfolio website built with Next.js, React, TypeScript, and Three.js.
+> A premium portfolio landing page with rich motion, immersive 3D visuals, and a polished responsive experience.
 
 ---
 
-## ✨ What This App Is
+## ✨ What This Repo Contains
 
-This repo contains a visually-rich portfolio landing page with:
+This project is a high-end portfolio showcase built to feel premium and editorial. It includes:
 
-- a **studio-style hero section**
-- a **desktop-only 3D helix gallery**
-- a **clean, touch-friendly project list**
-- custom cursor and hover effects
-- mobile-first responsive behavior
+- a **cinematic hero section** with animated headline and refined typography
+- a **desktop-only 3D helix gallery** for immersive project presentation
+- a **clean, categorized project list** with hover and touch-friendly interactions
+- **custom cursor and glow effects** for a luxe interactive feel
+- **mobile-first responsive design** that keeps the content centered and uncluttered
 
-It is designed to showcase high-quality web projects while keeping the mobile experience clean and readable.
+This repo is designed to demonstrate refined UI motion, polished visual details, and a modern product showcase experience.
 
 ---
 
-## 🚀 Highlights
+## 🚀 Premium Features
 
-| Feature | What it does |
+| Premium Element | Description |
 |---|---|
-| Interactive Hero | Animated headline, intro copy, and centered mobile layout |
-| 3D Helix Gallery | Desktop-only rotating project cards created with Three.js |
-| Project List | Categorized projects with hover and tap interactions |
-| Cursor & Visuals | Custom cursor, glow effects, and animation polish |
-| Responsive Design | Mobile-first, centered layout, no unwanted bottom scroll |
+| Cinematic hero | Large typography, layered gradients, and subtle motion |
+| 3D gallery | Three.js helix scene for premium desktop presentation |
+| Curated project list | Clean categories, polished hover UI, and touch-ready behavior |
+| Visual polish | Custom cursor, glow atmospherics, and smooth transitions |
+| Responsive refinement | Mobile-first layout with centered content and no overflow |
 
 ---
 
-## 🧱 Project Structure
+## 🧱 Core Structure
 
-- `src/app/` — application entry and page layout
-- `src/components/` — reusable UI pieces: `Hero`, `ProjectList`, `HelixGallery`, custom cursors
-- `src/lib/projects.ts` — project metadata powering gallery cards and list items
+- `src/app/` — base app and page structure
+- `src/components/` — premium UI components such as `Hero`, `ProjectList`, and `HelixGallery`
+- `src/lib/projects.ts` — curated project metadata for the gallery and list
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
 - `Next.js`
 - `React`
@@ -50,19 +50,8 @@ It is designed to showcase high-quality web projects while keeping the mobile ex
 
 ---
 
-## ▶️ Run Locally
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
 ## 📌 Notes
 
-- The **3D helix gallery is intentionally desktop-only** and hides on smaller screens.
-- The mobile layout is built to keep content centered and avoid extra vertical scrolling.
-- This project is focused on **presentation, motion, and visual polish** rather than a traditional multi-page app.
+- The 3D helix gallery is intentionally optimized for desktop only.
+- The mobile version focuses on readability, centered layout, and premium spacing.
+- The repo showcases high-end UI motion and polished presentation rather than a standard multi-page platform.

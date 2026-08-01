@@ -27,7 +27,7 @@ const charVariants = {
   },
   outro: {
     y: '-130%', opacity: 0, rotateX: 70, skewX: '-8deg',
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 }
 
