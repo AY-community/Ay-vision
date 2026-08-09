@@ -209,7 +209,7 @@ export default function Hero() {
             >
               <div className={styles.stat}>
                 <div className={styles.statNum}>
-                  {phase === 'done' ? <OdometerNumber value={12} digitHeight={41} /> : <span>0</span>}+
+                  {phase === 'done' ? <OdometerNumber value={6} digitHeight={41} /> : <span>0</span>}+
                 </div>
                 <span className={styles.statLabel}>Projects</span>
               </div>
@@ -234,8 +234,19 @@ export default function Hero() {
               initial="hidden" animate={phase === 'outro' ? 'outro' : phase === 'done' ? 'visible' : 'hidden'}
               variants={uiVariants(0.68, 0)}
             >
-              <a href="#projects" className={styles.navLink}>Projects</a>
-              <a href="#contact" className={styles.contactBtn}>
+              <button
+                className={styles.navLink}
+                onClick={() => setPhase(phase === 'outro' ? 'done' : 'outro')}
+                aria-label="View projects"
+              >
+                Projects
+              </button>
+              <a
+                href="https://www.linkedin.com/in/aymen-chedri-maamer-80ab53341/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactBtn}
+              >
                 <div className={styles.contactBlob} />
                 <span className={styles.contactInner}>Contact Me</span>
               </a>

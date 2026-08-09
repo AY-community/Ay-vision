@@ -13,19 +13,19 @@
   pointer-events: none; /* Let mouse events pass through to HelixGallery */
 }
 
-/* Project-colour atmosphere: the left mask keeps all identity text readable. */
+/* Project-colour atmosphere: full-viewport wash for maximum immersion. */
 .projectAtmosphere {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   opacity: 0;
   background:
-    /* 1) Top-Left Glow (Sits over the dark mask for a rich ambient light from the top corner) */
+    /* 1) Top-Left Glow */
     radial-gradient(circle 65vw at 0% 0%, color-mix(in srgb, var(--project-color) 45%, transparent) 0%, transparent 85%),
-    /* 2) Bottom-Right Glow (Massive and vibrant blast from the bottom corner) */
+    /* 2) Bottom-Right Glow */
     radial-gradient(circle 85vw at 100% 100%, color-mix(in srgb, var(--project-color) 75%, transparent) 0%, transparent 85%),
-    /* 3) Dark base mask on the left (ensures text always has a high-contrast foundation) */
+    /* 3) Dark base mask on the left */
     linear-gradient(90deg, color-mix(in srgb, var(--project-color) 10%, #050505) 0%, rgba(5, 5, 5, 0.9) 25%, rgba(0, 0, 0, 0.4) 50%, transparent 85%);
   transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -52,6 +52,13 @@
   position: relative;
   padding-bottom: 3px;
   transition: color 0.25s ease;
+  /* Reset <button> defaults so it looks identical to an <a> */
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .navLink::after {

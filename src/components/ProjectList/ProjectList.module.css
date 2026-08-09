@@ -168,16 +168,68 @@
     width: 100vw;
     height: 100vh;
     padding: 2rem 1.5rem;
+    /* Center the compact list vertically */
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    /* Don't block native page scroll on mobile */
+    pointer-events: none;
+  }
+
+  /* Re-enable pointer events only on actual clickable items */
+  .projectItem {
+    pointer-events: auto;
   }
 
   .scrollContent {
-    height: 100%;
+    /* Don't stretch to full height — let content define its own size */
+    height: auto;
     width: 100%;
+    /* Natural gap between category blocks, no space-between stretching */
+    gap: 1.4rem;
+    justify-content: flex-start;
+    max-width: 480px;
+  }
+
+  .categoryBlock {
+    gap: 0.4rem;
+  }
+
+  .projectItem {
+    padding: 0.35rem 0;
+  }
+
+  /* Larger, readable font — one line per project name */
+  .projectName {
+    font-size: clamp(1.1rem, 4.2vw, 1.4rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .categoryLabel {
+    font-size: 0.65rem;
+  }
+
+  /* Details stay hidden until hover — same behavior as desktop */
+  .projectDetails {
+    display: flex;
     gap: 0.75rem;
-    justify-content: space-between;
-    max-width: 720px;
+    font-size: 0.7rem;
+    /* opacity:0 and transform:-10px are kept from the base rule — hover reveals them */
+  }
+
+  .projectTagline {
+    font-size: clamp(0.6rem, 2.5vw, 0.75rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+  }
+
+  .statusBadge {
+    font-size: 0.55rem;
+    padding: 3px 7px;
+    white-space: nowrap;
   }
 }
