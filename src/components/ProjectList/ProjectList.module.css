@@ -163,15 +163,13 @@
 }
 @media (max-width: 1000px) {
   .container {
-    /* Keep projects in normal document flow on touch devices. The previous
-       fixed overlay left the page only one viewport tall, so Chrome consumed
-       the first swipe to collapse its UI and there was nothing to scroll. */
-    position: relative;
-    inset: auto;
+    /* This stays a fixed scene: vertical swipes are handled by the hero and
+       transition between the two animated states without page scrolling. */
+    position: fixed;
+    inset: 0;
     width: 100vw;
-    min-height: 100vh;
-    min-height: 100svh;
-    height: auto;
+    height: 100vh;
+    height: 100svh;
     padding: 2rem 1.5rem;
     /* Center the compact list vertically */
     justify-content: center;

@@ -67,7 +67,6 @@ export default function ProjectList({ phase, onHoverStart, onHoverEnd }: Project
 
   return (
     <motion.div 
-      id="projects"
       className={styles.container}
       variants={containerVariants}
       initial="hidden"

@@ -132,30 +132,62 @@ export default function Hero() {
     return () => clearTimeout(t)
   }, [loadComplete, phase])
 
-  // Desktop uses the wheel to toggle the project view. On touch devices, the
-  // native document scroll position owns that transition so the first swipe
-  // can scroll the page instead of only collapsing the browser chrome.
+  // Keep the experience as a fixed, two-state composition. Touch swipes are
+  // captured on mobile so Chrome cannot consume the first gesture to collapse
+  // its UI before the transition begins.
   useEffect(() => {
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches
 
     if (isTouchDevice) {
-      // Preserve the loading/intro sequence; native scrolling takes over only
-      // after the loader has completed.
+      // Preserve the loading/intro sequence before accepting gestures.
       if (!loadComplete) return
 
-      const handleScroll = () => {
-        setPhase(window.scrollY > 24 ? 'outro' : 'done')
+      let startX = 0
+      let startY = 0
+      let handledGesture = false
+
+      const handleTouchStart = (event: TouchEvent) => {
+        const touch = event.touches[0]
+        startX = touch.clientX
+        startY = touch.clientY
+        handledGesture = false
       }
 
-      window.addEventListener('scroll', handleScroll, { passive: true })
-      handleScroll()
+      const handleTouchMove = (event: TouchEvent) => {
+        const touch = event.touches[0]
+        const deltaX = touch.clientX - startX
+        const deltaY = startY - touch.clientY
 
-      return () => window.removeEventListener('scroll', handleScroll)
+        // Retain horizontal browser gestures, but reserve vertical swipes for
+        // the portfolio transition and prevent native viewport scrolling.
+        if (Math.abs(deltaY) <= Math.abs(deltaX)) return
+        if (event.cancelable) event.preventDefault()
+
+        if (!handledGesture && Math.abs(deltaY) > 30) {
+          handledGesture = true
+          setPhase(currentPhase => {
+            if (currentPhase === 'done' && deltaY > 0) return 'outro'
+            if (currentPhase === 'outro' && deltaY < 0) return 'done'
+            return currentPhase
+          })
+        }
+      }
+
+      window.addEventListener('touchstart', handleTouchStart, { passive: true })
+      window.addEventListener('touchmove', handleTouchMove, { passive: false })
+
+      return () => {
+        window.removeEventListener('touchstart', handleTouchStart)
+        window.removeEventListener('touchmove', handleTouchMove)
+      }
     }
 
     const handleWheel = (e: WheelEvent) => {
-      if (phase === 'done' && e.deltaY > 20) setPhase('outro')
-      else if (phase === 'outro' && e.deltaY < -20) setPhase('done')
+      setPhase(currentPhase => {
+        if (currentPhase === 'done' && e.deltaY > 20) return 'outro'
+        if (currentPhase === 'outro' && e.deltaY < -20) return 'done'
+        return currentPhase
+      })
     }
 
     window.addEventListener('wheel', handleWheel)
@@ -163,11 +195,11 @@ export default function Hero() {
     return () => {
       window.removeEventListener('wheel', handleWheel)
     }
-  }, [phase, loadComplete])
+  }, [loadComplete])
 
   const showProjects = () => {
     if (window.matchMedia('(pointer: coarse)').matches) {
-      document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+      setPhase('outro')
       return
     }
 
