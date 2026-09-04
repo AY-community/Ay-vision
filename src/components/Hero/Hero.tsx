@@ -132,33 +132,47 @@ export default function Hero() {
     return () => clearTimeout(t)
   }, [loadComplete, phase])
 
-  // Scroll/Wheel listener for outro/intro toggle
+  // Desktop uses the wheel to toggle the project view. On touch devices, the
+  // native document scroll position owns that transition so the first swipe
+  // can scroll the page instead of only collapsing the browser chrome.
   useEffect(() => {
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches
+
+    if (isTouchDevice) {
+      // Preserve the loading/intro sequence; native scrolling takes over only
+      // after the loader has completed.
+      if (!loadComplete) return
+
+      const handleScroll = () => {
+        setPhase(window.scrollY > 24 ? 'outro' : 'done')
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true })
+      handleScroll()
+
+      return () => window.removeEventListener('scroll', handleScroll)
+    }
+
     const handleWheel = (e: WheelEvent) => {
       if (phase === 'done' && e.deltaY > 20) setPhase('outro')
       else if (phase === 'outro' && e.deltaY < -20) setPhase('done')
     }
-    
-    let startY = 0
-    const handleTouchStart = (e: TouchEvent) => {
-      startY = e.touches[0].clientY
-    }
-    const handleTouchMove = (e: TouchEvent) => {
-      const deltaY = startY - e.touches[0].clientY
-      if (phase === 'done' && deltaY > 30) setPhase('outro')
-      else if (phase === 'outro' && deltaY < -30) setPhase('done')
-    }
 
     window.addEventListener('wheel', handleWheel)
-    window.addEventListener('touchstart', handleTouchStart)
-    window.addEventListener('touchmove', handleTouchMove)
 
     return () => {
       window.removeEventListener('wheel', handleWheel)
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchmove', handleTouchMove)
     }
-  }, [phase])
+  }, [phase, loadComplete])
+
+  const showProjects = () => {
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+      return
+    }
+
+    setPhase(currentPhase => currentPhase === 'outro' ? 'done' : 'outro')
+  }
 
   return (
     <>
@@ -236,7 +250,7 @@ export default function Hero() {
             >
               <button
                 className={styles.navLink}
-                onClick={() => setPhase(phase === 'outro' ? 'done' : 'outro')}
+                onClick={showProjects}
                 aria-label="View projects"
               >
                 Projects

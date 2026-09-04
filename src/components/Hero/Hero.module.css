@@ -382,8 +382,10 @@
 
 @media (max-width: 1000px) {
   .hero {
-    height: 100vh;
-    min-height: 100vh;
+    /* A stable viewport height prevents Chrome's address bar from resizing
+       this section as it collapses during the first swipe. */
+    height: 100svh;
+    min-height: 100svh;
     overflow: hidden;
   }
 

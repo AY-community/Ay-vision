@@ -163,10 +163,15 @@
 }
 @media (max-width: 1000px) {
   .container {
-    position: fixed;
-    inset: 0;
+    /* Keep projects in normal document flow on touch devices. The previous
+       fixed overlay left the page only one viewport tall, so Chrome consumed
+       the first swipe to collapse its UI and there was nothing to scroll. */
+    position: relative;
+    inset: auto;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100svh;
+    height: auto;
     padding: 2rem 1.5rem;
     /* Center the compact list vertically */
     justify-content: center;
