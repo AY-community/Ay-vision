@@ -39,6 +39,8 @@
   display: flex;
   align-items: center;
   gap: 1.8rem;
+  position: relative;
+  z-index: 40;
 }
 
 .navLink {
@@ -61,6 +63,7 @@
   padding-right: 0;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  touch-action: manipulation;
 }
 
 .navLink::after {
@@ -90,6 +93,7 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  touch-action: manipulation;
 }
 
 .contactBtn::after {

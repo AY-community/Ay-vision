@@ -279,10 +279,14 @@ export default function Hero() {
               className={styles.navActions}
               initial="hidden" animate={phase === 'outro' ? 'outro' : phase === 'done' ? 'visible' : 'hidden'}
               variants={uiVariants(0.68, 0)}
+              style={{ pointerEvents: phase === 'done' ? 'auto' : 'none' }}
             >
               <button
                 className={styles.navLink}
-                onClick={showProjects}
+                onClick={(event) => {
+                  event.stopPropagation()
+                  showProjects()
+                }}
                 aria-label="View projects"
               >
                 Projects
@@ -292,6 +296,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.contactBtn}
+                onClick={(event) => event.stopPropagation()}
               >
                 <div className={styles.contactBlob} />
                 <span className={styles.contactInner}>Contact Me</span>
