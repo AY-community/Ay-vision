@@ -59,6 +59,8 @@
   outline: none;
   padding-left: 0;
   padding-right: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .navLink::after {
@@ -86,6 +88,8 @@
   background: radial-gradient(circle 70px at 80% -10%, #3a3d3d, #0d0f0f);
   position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .contactBtn::after {

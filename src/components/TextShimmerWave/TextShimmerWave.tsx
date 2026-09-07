@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react"
+import React, { type CSSProperties } from "react"
 import { motion, Transition } from "framer-motion"
 import styles from "./TextShimmerWave.module.css"
 
@@ -16,6 +16,7 @@ type TextShimmerWaveProps = {
   scaleDistance?: number
   rotateYDistance?: number
   transition?: Transition
+  letterStyle?: CSSProperties
 }
 
 export default function TextShimmerWave({
@@ -30,6 +31,7 @@ export default function TextShimmerWave({
   scaleDistance = 1.1,
   rotateYDistance = 10,
   transition,
+  letterStyle,
 }: TextShimmerWaveProps) {
   const MotionComponent = motion.create(
     Component as keyof React.JSX.IntrinsicElements,
@@ -51,6 +53,7 @@ export default function TextShimmerWave({
           <motion.span
             key={`${char}-${i}`}
             className={styles.letter}
+            style={letterStyle}
             initial={{
               translateZ: 0,
               scale: 1,

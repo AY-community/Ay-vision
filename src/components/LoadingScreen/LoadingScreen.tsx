@@ -16,6 +16,22 @@ export default function LoadingScreen({ progress, isComplete }: LoadingScreenPro
   const [visible, setVisible] = useState(true)
   const [leaving, setLeaving] = useState(false)
 
+  // The overlay covers the page, so prevent the page behind it from moving on
+  // touch devices before the portfolio gesture controls are ready.
+  useEffect(() => {
+    if (!visible) return
+
+    const htmlOverflow = document.documentElement.style.overflow
+    const bodyOverflow = document.body.style.overflow
+    document.documentElement.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.documentElement.style.overflow = htmlOverflow
+      document.body.style.overflow = bodyOverflow
+    }
+  }, [visible])
+
   useEffect(() => {
     if (isComplete) {
       const t1 = setTimeout(() => setLeaving(true), 300)
@@ -49,29 +65,26 @@ export default function LoadingScreen({ progress, isComplete }: LoadingScreenPro
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              style={{ perspective: 500 }}
             >
-              <motion.div
+              <TextShimmerWave
                 className={styles.progressCounter}
-                initial={{ translateZ: 0, scale: 1, rotateY: 0, color: "rgba(255, 255, 255, 0.6)" }}
-                animate={{ 
-                  translateZ: [0, 20, 0],
-                  x: [0, 2, 0],
-                  y: [0, -2, 0],
-                  scale: [1, 1.15, 1],
-                  rotateY: [0, 20, 0],
-                  color: ["rgba(255, 255, 255, 0.6)", "#ffffff", "rgba(255, 255, 255, 0.6)"]
-                }}
-                transition={{ 
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatDelay: 0.1,
-                  ease: "easeInOut"
+                as="div"
+                duration={1.5}
+                spread={1.5}
+                zDistance={14}
+                xDistance={1.5}
+                yDistance={-1.5}
+                scaleDistance={1.08}
+                rotateYDistance={14}
+                letterStyle={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '0.82rem',
+                  fontWeight: 400,
+                  letterSpacing: '0.18em',
                 }}
               >
-                {Math.round(progress).toString().padStart(3, '0')}
-                <span className={styles.percentSymbol}>%</span>
-              </motion.div>
+                {`${Math.round(progress).toString().padStart(3, '0')}%`}
+              </TextShimmerWave>
             </motion.div>
           </div>
 

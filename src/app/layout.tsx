@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 
@@ -18,6 +18,14 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: 'AY VISION — Portfolio',
   description: 'Builder · Designer · Automator. Landing Pages, Full Stack & AI Automation projects.',
+}
+
+// Explicitly use the physical device width so mobile browsers do not fall
+// back to a desktop-sized layout before the responsive styles apply.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({

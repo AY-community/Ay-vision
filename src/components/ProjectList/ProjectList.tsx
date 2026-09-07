@@ -52,8 +52,9 @@ export default function ProjectList({ phase, onHoverStart, onHoverEnd }: Project
 
     if (isTouch) {
       if (activeTouchId === project.id) {
-        // Second tap: open link
-        window.open(project.link, '_blank')
+        // Second tap: navigate in the current tab. Opening a new tab on touch
+        // devices feels like an accidental popup and breaks the back gesture.
+        window.location.assign(project.link)
       } else {
         // First tap: preview it
         setActiveTouchId(project.id)

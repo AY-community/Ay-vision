@@ -1,12 +1,17 @@
 .overlay {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100svh;
   z-index: 9999;
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 .content {
@@ -18,17 +23,12 @@
 
 .progressCounter {
   font-family: var(--font-body);
-  font-size: 1rem;
-  letter-spacing: 0.25em;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
   color: rgba(255, 255, 255, 0.6);
   font-variant-numeric: tabular-nums;
   font-weight: 400;
-  transform-style: preserve-3d;
-}
-
-.percentSymbol {
-  color: rgba(255, 255, 255, 0.4);
-  margin-left: 0.1em;
+  line-height: 1;
 }
 
 /* ── Screen reader ────────────────────────────────────────────── */
