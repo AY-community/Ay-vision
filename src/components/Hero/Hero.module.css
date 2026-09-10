@@ -375,8 +375,9 @@
   .left {
     /* max-width scales from 400px at 1000px to 580px at 1400px */
     max-width: clamp(400px, calc(-100px + 34.5vw), 580px);
-    /* padding-left scales from 1.5rem at 1000px to 2.5rem at 1400px */
-    padding-left: clamp(1.5rem, calc(-1rem + 1.75vw), 2.5rem);
+    /* Keep the identity block visually centred in its column once the layout
+       fills the full viewport width. */
+    padding-left: clamp(3.75rem, calc(2.5rem + 2.5vw), 4.75rem);
   }
 
   .tagline {
@@ -389,6 +390,12 @@
 }
 
 @media (max-width: 1000px) {
+  /* The full-screen project-colour wash is a desktop hover treatment. On
+     touch it is triggered by the first preview tap and obscures the list. */
+  .projectAtmosphere {
+    display: none;
+  }
+
   .hero {
     /* A stable viewport height prevents Chrome's address bar from resizing
        this section as it collapses during the first swipe. */

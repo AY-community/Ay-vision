@@ -68,7 +68,7 @@ export default function ProjectList({ phase, onHoverStart, onHoverEnd }: Project
 
   return (
     <motion.div 
-      className={styles.container}
+      className={`${styles.container} ${phase === 'outro' ? styles.containerActive : ''}`}
       variants={containerVariants}
       initial="hidden"
       animate={phase === 'outro' ? 'visible' : 'hidden'}

@@ -179,8 +179,13 @@
     pointer-events: none;
   }
 
-  /* Re-enable pointer events only on actual clickable items */
+  /* Keep the hidden project view from intercepting taps in the hero. */
   .projectItem {
+    pointer-events: none;
+  }
+
+  /* Project links become tappable only after the projects view opens. */
+  .containerActive .projectItem {
     pointer-events: auto;
   }
 
