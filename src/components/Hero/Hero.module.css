@@ -390,12 +390,6 @@
 }
 
 @media (max-width: 1000px) {
-  /* The full-screen project-colour wash is a desktop hover treatment. On
-     touch it is triggered by the first preview tap and obscures the list. */
-  .projectAtmosphere {
-    display: none;
-  }
-
   .hero {
     /* A stable viewport height prevents Chrome's address bar from resizing
        this section as it collapses during the first swipe. */
